@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fstream>
-#include <windows.h>
 using namespace std;
 
 struct Batas{
@@ -27,14 +26,6 @@ Batas batas[100];
 int a,b,c,d,i;
 fstream fileobat;
 
-void gotoxy(int x, int y)
-{
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
-
 void baca_file(){
 	string isi_txt;
 	fileobat.open("posttest7apl.txt", ios::in);
@@ -47,18 +38,22 @@ void baca_file(){
 
 void tambah_file(){
 	fileobat.open("posttest7apl.txt", ios::app);
-		fileobat << "\nNama			" << ": " << batas[i].nama
+		fileobat <<"\n"
+				<< "\nNama			" << ": " << batas[i].nama
 				<<"\nJenis			" << ": " << batas[i].jenis
-				<<"\nHarga			" << ": " << batas[i].harga;
+				<<"\nHarga			" << ": " << batas[i].harga
+				<<"\n";
 	fileobat.close();
 }
 
 void nulis_file(){
 	fileobat.open("posttest7apl.txt", ios::out);
 	for (int i=0; i<jumlahdata; i++){
-		fileobat << "\nNama			" << ": " << batas[i].nama
+		fileobat <<"\n"
+				<< "\nNama			" << ": " << batas[i].nama
 				<<"\nJenis			" << ": " << batas[i].jenis
-				<<"\nHarga			" << ": " << batas[i].harga;
+				<<"\nHarga			" << ": " << batas[i].harga
+				<<"\n";
 	}fileobat.close();
 }
 
@@ -375,19 +370,7 @@ void inputdata(){ //fungsi void inputdata yang berisikan program input data yang
 		cout<< "\n===Data Telah Ditambahkan===";   
 		cout << "\n===================================\n\n";
 		}
-
-void hapusdata() //fungsi void hapusdata yang berisikan program hapus data yang ingin dihapus
-{int x,y;
- cout << "\n===================================";
- cout<<"\nHapus data ke-";cin>>x;
-  cout << "\n===================================";
- y=x-1;
- a--;
- for(int i=y;i<a;i++)
- {batas[i]=batas[i+1];}
- cout<<"\n+++++++ Data ke-"<<x<<" Berhasil Terhapus +++++++";
-  cout << "\n===================================";}
- 
+		
  void lihatdata(){ //fungsi void lihatdata yang akan menampilkan data yang telah diinput ke dalam tabel
  cout<<"\n================================Menampilkan Data===========================================\n\n";
  int i = jumlahdata;
@@ -402,9 +385,24 @@ void hapusdata() //fungsi void hapusdata yang berisikan program hapus data yang 
  }
 	cout<<"============================================================================================ ";}
 
+	
+void hapusdata() //fungsi void hapusdata yang berisikan program hapus data yang ingin dihapus
+{int x,y;
+ lihatdata();
+ cout << "\n===================================";
+ cout<<"\nHapus data ke-";cin>>x;
+  cout << "\n===================================";
+ y=x-1;
+ a--;
+ for(int i=y;i<a;i++)
+ {batas[i]=batas[i+1];}
+ cout<<"\n+++++++ Data ke-"<<x<<" Berhasil Terhapus +++++++";
+  cout << "\n===================================";}
+
 
 void editdata(){ //fungsi void editdata yang mana program ini menanyakan data mana yang akan di ubah dan menginput ulang jenis, nama, dan harga obat
 int k,l;
+lihatdata();
 	cout<<"\nMasukan Data yang akan diedit : ";
 	cin>>k;
 	l=k-1;
@@ -486,47 +484,32 @@ void search_menu(){//search menu yang dapat memilih mencari berdasarkan nama ata
 }
 }
 
-void Tampilan(){
-	 system("cls");
-	for(int i=0; i<78; i++){
-  for(int j=0; j<10; j+=9){
-   gotoxy(i,j); cout<<"=";
-  }
- }
- for(int i=0; i<10; i++){
-  for(int j=0; j<78; j+=77){
-   gotoxy(j,i); cout<<"||";
-  }
- }
 
- {
- gotoxy(30,4);cout<<"Program Data Obat";
- gotoxy(1,10);cout<<" ";
-}
-}
 
 int main()//program utama dimana program pilihan menu berada
 {
-Tampilan();
 int pilih;
 char kembali;
  char w;
-cout<<"=============================================================================";
-gotoxy(25,12);cout<<"==> PILIHAN MENU <==";
-gotoxy(25,13);cout<<"[1] Masukkan data";
-gotoxy(25,14);cout<<"[2] Hapus Data";
-gotoxy(25,15);cout<<"[3] Lihat Data";
-gotoxy(25,16);cout<<"[4] Cari Data";  
-gotoxy(25,17);cout<<"[5] Edit Data";
-gotoxy(25,18);cout<<"[6] Menu File";
-gotoxy(25,19);cout<<"[7] Keluar";
-  cout<<"\n\n=============================================================================";
-  cout<<"\nMasukkan Pilihan : ";
+  cout<<"\n=============================================================================";
+ cout<<"\n=                          PROGRAM DATA OBAT                               =";
+ cout<<"\n=============================================================================";
+cout<<"\n\n=============================================================================";
+cout<<"\n\t\t\t\t==> PILIHAN MENU <==";
+cout<<"\n\t\t\t\t[1] Masukkan data";
+cout<<"\n\t\t\t\t[2] Hapus Data";
+cout<<"\n\t\t\t\t[3] Lihat Data";
+cout<<"\n\t\t\t\t[4] Cari Data";  
+cout<<"\n\t\t\t\t[5] Edit Data";
+cout<<"\n\t\t\t\t[6] Menu File";
+cout<<"\n\t\t\t\t[7] Keluar";
+  cout<<"\n=============================================================================";
+  cout<<"\n\t\t\t\tMasukkan Pilihan : ";
   cin>>pilih;
   if(pilih==1){
 	tambah : // blokg
 		inputdata();
-		cout<< "\nApakah ingin menambah data lagi? (y/n) : "; cin >> kembali ; 
+		cout << "\nApakah ingin menambah data lagi? (y/n) : "; cin >> kembali ; 
 		if (kembali == 'y' || kembali == 'Y'){
 			goto tambah; // pergi ke blok add_more
 			cout<< endl; 
